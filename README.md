@@ -1,6 +1,6 @@
-# Gerenciamento de Contatos
+# Projeto de gerenciamento de Contatos com Monitoramento e Integração de CI/CD 
 
-Este projeto é uma aplicação para gerenciar contatos, permitindo o cadastro, consulta, atualização e exclusão de informações de contatos, como nome, telefone e e-mail, associando-os a uma região com base no DDD.
+Este projeto é uma aplicação para gerenciar contatos, permitindo o cadastro, consulta, atualização e exclusão de informações de contatos, como nome, telefone e e-mail, associando-os a uma região com base no DDD, também contém a implementação de um sistema de monitoramento utilizando Prometheus e Grafana, além de um pipeline de CI/CD com GitHub Actions para garantir a qualidade e a integridade do código. O sistema visa coletar métricas sobre a performance do aplicativo e garantir a execução de testes de qualidade contínuos.
 
 ## Funcionalidades
 
@@ -22,7 +22,6 @@ Este projeto é uma aplicação para gerenciar contatos, permitindo o cadastro, 
 - Os usuários podem atualizar as informações de contatos previamente cadastrados.
 - Exclusão de contatos da base de dados.
 
-## Requisitos Técnicos
 
 ### Persistência de Dados
 
@@ -40,11 +39,8 @@ Este projeto é uma aplicação para gerenciar contatos, permitindo o cadastro, 
 
 - Testes unitários foram desenvolvidos utilizando **xUnit** ou para garantir a qualidade do código.
 
-# Projeto de Monitoramento e Integração de CI/CD
-Este repositório contém a implementação de um sistema de monitoramento utilizando Prometheus e Grafana, além de um pipeline de CI/CD com GitHub Actions para garantir a qualidade e a integridade do código. O sistema visa coletar métricas sobre a performance do aplicativo e garantir a execução de testes de qualidade contínuos.
 
-### Requisitos Técnicos Atendidos
-GitHub Actions - CI Pipeline
+### GitHub Actions - CI Pipeline
 O pipeline de CI foi configurado para garantir que o código esteja sempre funcionando corretamente, através de três etapas principais:
 
 1. Build (Compilação):
