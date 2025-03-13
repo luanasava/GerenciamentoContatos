@@ -1,10 +1,9 @@
-name: TechChallenge3 teste
-
+name: TechChallenge3 Pipeline
 on:
   push:
-    branches: [ "master" ]
+    branches: [ "main" ]
   pull_request:
-    branches: [ "master" ]
+    branches: [ "main" ]
 
 jobs:
   build:
@@ -19,9 +18,11 @@ jobs:
         dotnet-version: 8.0.x
     - name: Clear NuGet cache
       run: dotnet nuget locals all --clear
+    - name: List files
+      run: ls -R
     - name: Restore dependencies
-      run: dotnet restore
+      run: dotnet restore TechChallengeFase1.sln
     - name: Build
-      run: dotnet build --no-restore
+      run: dotnet build TechChallengeFase1.sln --no-restore
     - name: Test
-      run: dotnet test --no-build --verbosity normal
+      run: dotnet test TechChallengeFase1.sln --no-build --verbosity normal
