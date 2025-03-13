@@ -26,8 +26,9 @@ Este projeto é uma aplicação para gerenciar contatos, permitindo o cadastro, 
 ### Persistência de Dados
 
 - Utiliza um banco de dados para armazenar as informações dos contatos.
-- O projeto implementa acesso a dados com **Entity Framework Core** ou **Dapper**.
+- O projeto implementa acesso a dados com **Entity Framework Core**.
 
+  
 ### Validações
 
 - Validações para garantir consistência dos dados:
