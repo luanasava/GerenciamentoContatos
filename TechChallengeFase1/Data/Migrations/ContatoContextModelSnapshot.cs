@@ -20,6 +20,7 @@ namespace TechChallengeFase1.Migrations
                 .HasAnnotation("ProductVersion", "8.0.7")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
+            
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
             modelBuilder.Entity("TechChallengeFase1.Models.Entity.Contatos", b =>
