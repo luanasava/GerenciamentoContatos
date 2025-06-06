@@ -17,6 +17,8 @@ jobs:
       with:
         dotnet-version: 8.0.x
         
+    - name: Clear NuGet cache
+      run: dotnet nuget locals all --clear
     - name: Cache NuGet packages
       uses: actions/cache@v4
       with:
@@ -24,8 +26,6 @@ jobs:
         key: ${{ runner.os }}-nuget-${{ hashFiles('**/*.csproj') }}
         restore-keys: |
           ${{ runner.os }}-nuget-
-    - name: Clear NuGet cache
-      run: dotnet nuget locals all --clear
     - name: List files
       run: ls -R
     - name: Restore dependencies
