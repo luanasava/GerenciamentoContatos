@@ -14,7 +14,7 @@ jobs:
     - name: Setup .NET
       uses: actions/setup-dotnet@v4
       with:
-        dotnet-version: 8.0.16
+        dotnet-version: 8.0.x
         
     - name: Clear NuGet cache
       run: dotnet nuget locals all --clear
@@ -24,6 +24,14 @@ jobs:
       
     - name: Build
       run: dotnet build TechChallengeFase1.sln --no-restore
+
+    - name: Clean and rebuild
+      run: |
+        dotnet clean
+        dotnet build --no-restore
       
     - name: Test
       run: dotnet test TechChallengeFase1.sln --no-build --no-restore --verbosity normal
+
+    - name: Test with diagnostics
+      run: dotnet test --logger:"console;verbosity=detailed" --diag:test_logs.txt
