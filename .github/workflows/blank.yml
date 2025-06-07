@@ -1,60 +1,28 @@
-name: TechChallenge3 Pipeline
+name: TechChallengeFase1
+
 on:
   push:
-    branches: [ "master" ]
+    branches: [ master ]
   pull_request:
-    branches: [ "master" ]
+    branches: [ master ]
 
 jobs:
-  build:
+  build-and-test:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v4
-    
+      - uses: actions/checkout@v4
 
-    - name: Setup .NET
-      uses: actions/setup-dotnet@v4
-      with:
-        dotnet-version: 8.0.301 
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 8.0.x
 
+      - name: Restore
+        run: dotnet restore
 
-    - name: Clear NuGet and temp caches
-      run: |
-        dotnet nuget locals all --clear
-        rm -rf ~/.nuget/packages
-        rm -rf ~/.templateengine
+      - name: Build
+        run: dotnet build --no-restore
 
-
-    - name: Restore dependencies
-      run: |
-        dotnet restore TechChallengeFase1.sln --force --verbosity detailed
-        dotnet list TechChallengeFase1.sln package 
-
-
-    - name: Build solution
-      run: dotnet build TechChallengeFase1.sln --no-restore --verbosity detailed
-
-
-    - name: Run tests
-      run: |
-        dotnet test TechChallengeFase1.sln \
-          --no-build \
-          --no-restore \
-          --verbosity detailed \
-          --logger "console;verbosity=normal" \
-          --blame \
-          --diag:test_logs.txt
-        
-
-        ls -R TechChallengeFase1.Teste/bin/Debug/net8.0/
-
-
-    - name: Upload test logs
-      if: failure()
-      uses: actions/upload-artifact@v4
-      with:
-        name: test-diagnostics
-        path: |
-          test_logs.txt
-          TechChallengeFase1.Teste/bin/Debug/net8.0/testhost.deps.json
+      - name: Test
+        run: dotnet test --no-build --verbosity normal
