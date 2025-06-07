@@ -11,27 +11,50 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
+    
+
     - name: Setup .NET
       uses: actions/setup-dotnet@v4
       with:
-        dotnet-version: 8.0.x
-        
-    - name: Clear NuGet cache
-      run: dotnet nuget locals all --clear
-      
-    - name: Restore dependencies
-      run: dotnet restore TechChallengeFase1.sln --force
-      
-    - name: Build
-      run: dotnet build TechChallengeFase1.sln --no-restore
+        dotnet-version: 8.0.301 
 
-    - name: Clean and rebuild
+
+    - name: Clear NuGet and temp caches
       run: |
-        dotnet clean
-        dotnet build --no-restore
-      
-    - name: Test
-      run: dotnet test TechChallengeFase1.sln --no-build --no-restore --verbosity normal
+        dotnet nuget locals all --clear
+        rm -rf ~/.nuget/packages
+        rm -rf ~/.templateengine
 
-    - name: Test with diagnostics
-      run: dotnet test --logger:"console;verbosity=detailed" --diag:test_logs.txt
+
+    - name: Restore dependencies
+      run: |
+        dotnet restore TechChallengeFase1.sln --force --verbosity detailed
+        dotnet list TechChallengeFase1.sln package 
+
+
+    - name: Build solution
+      run: dotnet build TechChallengeFase1.sln --no-restore --verbosity detailed
+
+
+    - name: Run tests
+      run: |
+        dotnet test TechChallengeFase1.sln \
+          --no-build \
+          --no-restore \
+          --verbosity detailed \
+          --logger "console;verbosity=normal" \
+          --blame \
+          --diag:test_logs.txt
+        
+
+        ls -R TechChallengeFase1.Teste/bin/Debug/net8.0/
+
+
+    - name: Upload test logs
+      if: failure()
+      uses: actions/upload-artifact@v3
+      with:
+        name: test-diagnostics
+        path: |
+          test_logs.txt
+          TechChallengeFase1.Teste/bin/Debug/net8.0/testhost.deps.json
