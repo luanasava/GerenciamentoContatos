@@ -7,7 +7,6 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     steps:
@@ -19,18 +18,12 @@ jobs:
         
     - name: Clear NuGet cache
       run: dotnet nuget locals all --clear
-    - name: Cache NuGet packages
-      uses: actions/cache@v4
-      with:
-        path: ~/.nuget/packages
-        key: ${{ runner.os }}-nuget-${{ hashFiles('**/*.csproj') }}
-        restore-keys: |
-          ${{ runner.os }}-nuget-
-    - name: List files
-      run: ls -R
+      
     - name: Restore dependencies
-      run: dotnet restore TechChallengeFase1.sln
+      run: dotnet restore TechChallengeFase1.sln --force
+      
     - name: Build
       run: dotnet build TechChallengeFase1.sln --no-restore
+      
     - name: Test
-      run: dotnet test TechChallengeFase1.sln --no-build --verbosity normal
+      run: dotnet test TechChallengeFase1.sln --no-build --no-restore --verbosity normal
